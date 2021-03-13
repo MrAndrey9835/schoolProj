@@ -4,9 +4,9 @@ using System.Text.RegularExpressions;
 
 namespace CalculateEngine
 {
-    enum EquationType { Linear, Modulus, Parabola, Root, Hyperbola }
+    //enum EquationType { Linear, Modulus, Parabola, Root, Hyperbola }
 
-    public class Equation
+    /*public class Equation
     {
         internal EquationType type = default;
         internal int coeffVarSquared = 0;        //Коэфициент при переменной^2; null так как может отсутствовать
@@ -49,5 +49,13 @@ namespace CalculateEngine
             coeffVar = Convert.ToInt32(equationElements[0].Substring(0, equationElements[0].Length - 1));
             freeNumber = Convert.ToInt32(equationElements[1] + equationElements[2]);
         }
+    }*/
+
+    abstract class Equation
+    {
+        internal float coeffVar = 1;
+        internal float freeNumber = 0;
+        internal char mathVar = default;
+        internal List<float> solution;
     }
 }
