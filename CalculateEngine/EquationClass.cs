@@ -6,7 +6,7 @@ namespace CalculateEngine
 {
     enum EquationType { Linear, Modulus, Parabola, Root, Hyperbola }
 
-    public class Equation 
+    public class Equation
     {
         internal EquationType type = default;
         internal int coeffVarSquared = 0;        //Коэфициент при переменной^2; null так как может отсутствовать
