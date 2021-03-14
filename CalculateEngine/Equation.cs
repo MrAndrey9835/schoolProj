@@ -51,11 +51,12 @@ namespace CalculateEngine
         }
     }*/
 
-    abstract class Equation
+    public abstract class Equation
     {
-        internal float coeffVar = 1;
-        internal float freeNumber = 0;
-        internal char mathVar = default;
+        internal float varCoefficient;
+        internal float freeCoefficient;             //Коэффициент при переменной; Свободный коэф
+        internal char mathVar;                      //Буковка в кач-ве переменной
         internal List<float> solution;
+        internal static Regex equationPattern;
     }
 }
