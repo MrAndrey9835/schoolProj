@@ -9,7 +9,7 @@ namespace CalculateEngine
     {
         static LinearEquation()
         {
-            equationPattern = new Regex(@"\d*\w ([\+|-] \d+ )?= 0");
+            EquationPattern = new Regex(@"\d*\w ([\+|-] \d+ )?= 0");
         }
 
         public LinearEquation(float coeffVar, float freeCoeff, char mathVar)
@@ -24,7 +24,7 @@ namespace CalculateEngine
     {
         static ParabolaEquation()
         {
-            equationPattern = new Regex(@"\d*\w\^2 ([\+|-] \d*\w )?([\+|-] \d+ )?= 0");
+            EquationPattern = new Regex(@"\d*\w\^2 ([\+|-] \d*\w )?([\+|-] \d+ )?= 0");
         }
     }
 

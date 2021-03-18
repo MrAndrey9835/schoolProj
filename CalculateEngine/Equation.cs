@@ -57,6 +57,11 @@ namespace CalculateEngine
         internal float freeCoefficient;             //Коэффициент при переменной; Свободный коэф
         internal char mathVar;                      //Буковка в кач-ве переменной
         internal List<float> solution;
-        internal static Regex equationPattern;
+
+        internal static Regex EquationPattern
+        {
+            private protected set { EquationPattern = value; }
+            get { return EquationPattern; }
+        }
     }
 }
