@@ -30,11 +30,9 @@ namespace Calculator
 
         private void SolveButton_Click(object sender, RoutedEventArgs e)
         {
-            
-
             try
             {
-                Equation eq = new Equation(EquationTextBox.Text, variable);
+                Equation eq = EquationController.GetEquation(EquationTextBox.Text, variable);
             }
             catch (Exception ex)
             {
