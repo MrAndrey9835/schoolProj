@@ -33,7 +33,7 @@ namespace Calculator
             string solution = null;
             Equation eq = EquationController.GetEquation(EquationTextBox.Text, variable);
             foreach (var sol in EquationController.GetSolution(eq))
-                solution += sol + ' ';
+                solution += sol + " ";
             solution = solution[0..^1];
             SolutionTextBox.Text = solution;
         }
