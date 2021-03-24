@@ -42,6 +42,23 @@ namespace CalculateEngine
 
             return equation;
         }
+
+        public static List<float> GetSolution(Equation eq)
+        {
+            List<float> solution = new List<float>();
+
+            if (eq is LinearEquation)
+                solution.Add(-eq.freeCoefficient / eq.linearCoefficient);
+            else if (eq is QuadraticEquation)
+            {
+                var quadEq = eq as QuadraticEquation;
+                float sqrtOfDiscriminant = (float)Math.Sqrt(Math.Pow(quadEq.linearCoefficient, 2) - 4 * quadEq.quadraticCoefficient * quadEq.freeCoefficient);
+                solution.Add((-quadEq.freeCoefficient + sqrtOfDiscriminant) / (2 * quadEq.quadraticCoefficient));
+                solution.Add((-quadEq.freeCoefficient - sqrtOfDiscriminant) / (2 * quadEq.quadraticCoefficient));
+            }
+
+            return solution;
+        }
         //Определить методы для решения уравнения
         //Определить методы для определения типа уравнения /ПОПРАВКА: не уверен что необходимо
     }
