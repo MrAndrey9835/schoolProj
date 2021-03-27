@@ -7,26 +7,17 @@ namespace CalculateEngine
     public static class EquationController
     {
         //Создание уравнения
-        public static Equation GetEquation(string stringEquation, char mathVariable)
+        public static Equation GetEquation(string equation, char mathVariable)
         {
-            Equation equation = null;
+            Equation result = null;
             float linearCoeff;
             float freeCoeff;
-            stringEquation = RemoveWhitespaceAfterSigns(stringEquation);
+            equation = RemoveWhitespaceAfterSigns(equation);
+            List<string> equationElements = new List<string>(equation.Split(' '));
 
-            if (LinearEquation.EquationPattern.IsMatch(stringEquation))
-            {
-                (linearCoeff, freeCoeff) = LinearEquation.Decompose(stringEquation);
-                equation = new LinearEquation(linearCoeff, freeCoeff, mathVariable);
-            }
-            else if (QuadraticEquation.EquationPattern.IsMatch(stringEquation))
-            {
-                float quadraticCoeff;
-                (quadraticCoeff, linearCoeff, freeCoeff) = QuadraticEquation.Decompose(stringEquation);
-                equation = new QuadraticEquation(quadraticCoeff, linearCoeff, freeCoeff, mathVariable);
-            }
 
-            return equation;
+
+            return result;
         }
 
         private static string RemoveWhitespaceAfterSigns(string equation)     //x^2 - 4x + 7 = 0 → x^2 -4x +7 = 0
