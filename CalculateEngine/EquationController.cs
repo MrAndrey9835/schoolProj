@@ -1,37 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CalculateEngine
 {
     public static class EquationController
     {
-        //Создание уравнения
         public static Equation GetEquation(string equation, char mathVariable)
         {
-            Equation result = null;
-            float linearCoeff;
-            float freeCoeff;
-            equation = RemoveWhitespaceAfterSigns(equation);
-            List<string> equationElements = new List<string>(equation.Split(' '));
+            Equation result = default;
+            float linearCoeff = default;
+            float freeCoeff = default;
+            TransformString(ref equation);
 
-
+            if (equation.Contains(mathVariable + "^2"))
+            {
+                float quadraticCoeff = default;
+                (quadraticCoeff, linearCoeff, freeCoeff) = QuadraticEquation.Decompose(equation, mathVariable);
+                result = new QuadraticEquation(quadraticCoeff, linearCoeff, freeCoeff, mathVariable);
+            }
+            else
+            {
+                (linearCoeff, freeCoeff) = Equation.Decompose(equation, mathVariable);
+                result = new LinearEquation(linearCoeff, freeCoeff, mathVariable);
+            }
 
             return result;
         }
 
-        private static string RemoveWhitespaceAfterSigns(string equation)     //x^2 - 4x + 7 = 0 → x^2 -4x +7 = 0
+        internal static void TransformString(ref string equation)   //Приводит строку к формату: "x +2 =0"
         {
-            List<char> equationElements = new List<char>(equation);
-            equation = "";
-            for (int i = 0; i < equationElements.Count; ++i)
+            List<char> eqElements = new List<char>(equation);
+            equation = null;
+            for (int i = 0; i < eqElements.Count; ++i)
             {
-                if ((equationElements[i] == '+' || equationElements[i] == '-') && char.IsWhiteSpace(equationElements[i + 1]))
-                    equationElements.RemoveAt(i + 1);
-                equation += equationElements[i];
+                if (eqElements[i] == '+' || eqElements[i] == '-' || eqElements[i] == '=')
+                {
+                    if (i != 0 && !char.IsWhiteSpace(eqElements[i - 1]))
+                        eqElements.Insert(i, ' ');
+                    else if (char.IsWhiteSpace(eqElements[i + 1]))
+                        eqElements.RemoveAt(i + 1);
+                    else if (i - 1 == 0 && char.IsWhiteSpace(eqElements[i - 1]))
+                        eqElements.RemoveAt(i - 1);
+                }
             }
 
-            return equation;
+            foreach (var symbol in eqElements)
+                equation += symbol;
         }
 
         public static List<float> GetSolution(Equation eq)
@@ -50,7 +66,5 @@ namespace CalculateEngine
 
             return solution;
         }
-        //Определить методы для решения уравнения
-        //Определить методы для определения типа уравнения /ПОПРАВКА: не уверен что необходимо
     }
 }

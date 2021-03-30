@@ -7,15 +7,12 @@ namespace CalculateEngine
 {
     class LinearEquation : Equation
     {
-        internal static readonly Regex EquationPattern = new Regex(@"[-]?\d*\w ([\+|-] \d+ )?= 0");
-
         public LinearEquation(float linearCoeff, float freeCoeff, char mathVar) : base(linearCoeff, freeCoeff, mathVar) { }
     }
 
     class QuadraticEquation : Equation
     {
         internal float quadraticCoefficient;
-        internal static readonly Regex EquationPattern = new Regex(@"[-]?\d*\w\^2 ([\+|-] \d*\w )?([\+|-] \d+ )?= 0");
 
         public QuadraticEquation(float quadraticCoeff, float linearCoeff, float freeCoeff, char mathVar)
             : base(linearCoeff, freeCoeff, mathVar)
@@ -23,28 +20,26 @@ namespace CalculateEngine
             quadraticCoefficient = quadraticCoeff;
         }
 
-        internal static (float, float, float) Decompose(string equation)
+        internal static new (float, float, float) Decompose(string equation, char mathVar)
         {
-            string[] equationElements = equation.Split(' ');
-            float quadraticCoeff = Convert.ToSingle(equationElements[0][0..^3]);
-            float linearCoeff, freeCoeff;
-            (linearCoeff, freeCoeff) = Decompose(equation, mathVarElementIndex: 1);
+            var eqTerms = new List<string>(equation.Split(' '));
+            float quadraticCoeff = default, linearCoeff, freeCoeff;
+
+            int qTermIndex = eqTerms.FindIndex(term => term.Contains(mathVar + "^2"));
+            if (eqTerms[qTermIndex] == mathVar + "^2")
+                quadraticCoeff = 1;
+            else
+                quadraticCoeff = Convert.ToSingle(eqTerms[qTermIndex][..^3]);
+
+            eqTerms.RemoveAt(qTermIndex);
+            equation = null;
+            foreach (var term in eqTerms)
+                equation += term;
+            EquationController.TransformString(ref equation);
+
+            (linearCoeff, freeCoeff) = Equation.Decompose(equation, mathVar);
+
             return (quadraticCoeff, linearCoeff, freeCoeff);
         }
     }
-
-    /*class HyperbolaEquation : Equation
-    {
-
-    }
-
-    class RootEquation : Equation
-    {
-
-    }
-
-    class ModulusEquation : Equation
-    {
-
-    }*/
 }

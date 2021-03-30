@@ -17,17 +17,25 @@ namespace CalculateEngine
             this.mathVar = mathVar;
         }
 
-        internal static (float, float) Decompose(string equation, int mathVarElementIndex = 0)
-        {                                                        //↑Индекс элемента массива, где находится переменная
-            string[] equationElements = equation.Split(' ');
-            float linearCoeff = 0;
-            float freeCoeff = 0;
-            try
+        internal static (float, float) Decompose(string equation, char mathVar)
+        {
+            string[] eqTerms = equation.Split(' ');
+            float linearCoeff = default;
+            float freeCoeff = default;
+            
+            foreach (var term in eqTerms)
             {
-                linearCoeff = Convert.ToSingle(equationElements[mathVarElementIndex][0..^1]);
-                freeCoeff = Convert.ToSingle(equationElements[mathVarElementIndex + 1]);
+                if (term.Contains(mathVar))
+                {
+                    if (term[0] == mathVar)     //x +4 =0; Перед x ничего нет
+                        linearCoeff = 1;
+                    else
+                        linearCoeff = Convert.ToSingle(term[..^1]);
+                }
+                else if (!term.Contains('=') && !term.Contains(mathVar))
+                    freeCoeff = Convert.ToSingle(term);
             }
-            finally { }
+
             return (linearCoeff, freeCoeff);
         }
     }
