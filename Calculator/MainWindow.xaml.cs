@@ -30,12 +30,21 @@ namespace Calculator
 
         private void SolveButton_Click(object sender, RoutedEventArgs e)
         {
-            string solution = null;
+            List<float> solution;
+            if (string.Empty == EquationTextBox.Text)
+                return;
+
             Equation eq = EquationController.GetEquation(EquationTextBox.Text, variable);
-            foreach (var sol in EquationController.GetSolution(eq))
-                solution += sol + " ";
-            solution = solution[0..^1];
-            SolutionTextBox.Text = solution;
+
+            solution = EquationController.GetSolution(eq);
+            if (solution.Count == 1)
+                SolutionTextBox.Text = Convert.ToString(solution[0]);
+            else
+            {
+                foreach (var el in solution)
+                    SolutionTextBox.Text += el + "; ";
+                SolutionTextBox.Text = SolutionTextBox.Text.Remove(SolutionTextBox.Text.Length - 2);
+            }
         }
 
         private void EquationTextBox_Input(object sender, KeyEventArgs e)

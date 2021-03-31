@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:Calculator"
         xmlns:mD="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" MaxWidth="800" MaxHeight="450" MinWidth="800" MinHeight="450">
+        Title="MainWindow" Width="400" Height="300" MaxWidth="800" MaxHeight="300" MinWidth="600" MinHeight="300">
     <Grid>
         <TextBox x:Name="EquationTextBox" HorizontalAlignment="Left" Margin="40,30,0,0" mD:HintAssist.Hint="Введите уравнение" TextWrapping="NoWrap" VerticalAlignment="Top" Width="160" Height="28" BorderThickness="1,1,1,1" BorderBrush="Gray" KeyUp="EquationTextBox_Input"/>
         <Button x:Name="SolveButton" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,80,0,0" Width="150" Height="25" Content="Решить уравнение" FontSize="13" Click="SolveButton_Click"/>
-        <TextBox x:Name="SolutionTextBox" HorizontalAlignment="Center" Margin="0,30,0,0" mD:HintAssist.Hint="Ответ:" TextWrapping="NoWrap" VerticalAlignment="Top" Width="160" BorderThickness="1,1,1,1" IsReadOnly="True"/>
+        <TextBox x:Name="SolutionTextBox" HorizontalAlignment="Left" Margin="340,30,0,0" mD:HintAssist.Hint="Ответ:" TextWrapping="NoWrap" VerticalAlignment="Top" Width="160" BorderThickness="1,1,1,1" IsReadOnly="True"/>
     </Grid>
 </Window>

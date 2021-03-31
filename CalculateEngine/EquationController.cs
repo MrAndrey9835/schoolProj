@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
+using System.Windows.Shapes;
 
 namespace CalculateEngine
 {
@@ -14,7 +14,7 @@ namespace CalculateEngine
             float freeCoeff = default;
             TransformString(ref equation);
 
-            if (equation.Contains(mathVariable + "^2"))
+            if (GetEquationType(equation) == typeof(QuadraticEquation))
             {
                 float quadraticCoeff = default;
                 (quadraticCoeff, linearCoeff, freeCoeff) = QuadraticEquation.Decompose(equation, mathVariable);
@@ -50,6 +50,11 @@ namespace CalculateEngine
                 equation += symbol;
         }
 
+        public static Type GetEquationType(string eq)
+        {
+            return eq.Contains("^2") ? typeof(QuadraticEquation) : typeof(LinearEquation);
+        }
+
         public static List<float> GetSolution(Equation eq)
         {
             List<float> solution = new List<float>();
@@ -63,6 +68,9 @@ namespace CalculateEngine
                 solution.Add((-quadEq.freeCoefficient + sqrtOfDiscriminant) / (2 * quadEq.quadraticCoefficient));
                 solution.Add((-quadEq.freeCoefficient - sqrtOfDiscriminant) / (2 * quadEq.quadraticCoefficient));
             }
+
+            if (solution.Contains(0f))
+                solution = new List<float> { 0f };
 
             return solution;
         }

@@ -5,12 +5,12 @@ using System.Text.RegularExpressions;
 
 namespace CalculateEngine
 {
-    class LinearEquation : Equation
+    public class LinearEquation : Equation
     {
         public LinearEquation(float linearCoeff, float freeCoeff, char mathVar) : base(linearCoeff, freeCoeff, mathVar) { }
     }
 
-    class QuadraticEquation : Equation
+    public class QuadraticEquation : Equation
     {
         internal float quadraticCoefficient;
 
