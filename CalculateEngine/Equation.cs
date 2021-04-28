@@ -7,8 +7,8 @@ namespace CalculateEngine
     public abstract class Equation
     {
         internal float linearCoefficient;
-        internal float freeCoefficient;             //Коэффициент при переменной; Свободный коэф
-        internal char mathVar;                      //Буковка в кач-ве переменной
+        internal float freeCoefficient;
+        internal char mathVar;
 
         protected Equation(float linearCoeff, float freeCoeff, char mathVar)
         {
@@ -27,7 +27,7 @@ namespace CalculateEngine
             {
                 if (term.Contains(mathVar))
                 {
-                    if (term[0] == mathVar)     //x +4 =0; Перед x ничего нет
+                    if (term[0] == mathVar)
                         linearCoeff = 1;
                     else
                         linearCoeff = Convert.ToSingle(term[..^1]);
