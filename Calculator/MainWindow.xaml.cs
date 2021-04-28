@@ -21,6 +21,9 @@ namespace Calculator
 
         private void SolveButton_Click(object sender, RoutedEventArgs e)
         {
+            if (!EquationTextBox.Text.Contains('=') || !EquationTextBox.Text.Contains(variable) || variable == default)
+                return; 
+
             List<float> solution;
             if (string.Empty == EquationTextBox.Text)
                 return;
@@ -53,9 +56,9 @@ namespace Calculator
                     variable = inputCharacter;
                 else if (inputCharacter != variable)
                 {
-                    MessageBox.Show("Нельзя ввести больше одной переменной"); //Заменить
+                    MessageBox.Show("Нельзя ввести больше одной переменной");
                     var newText = EquationTextBox.Text.ToList();
-                    newText.RemoveAll(c => c == inputCharacter);              //!ДОДЕЛАТЬ
+                    newText.RemoveAll(c => c == inputCharacter);
                     EquationTextBox.Clear();
                     foreach (var element in newText)
                         EquationTextBox.Text += element.ToString();
